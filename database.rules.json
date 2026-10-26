@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "aula": {
+      ".read": "auth != null",
+      "session": {
+        ".write": "auth != null && (auth.token.email === 'jacopo@ferrioli.eu' || auth.token.email === 'amministrazione.generale@cas.ferrioli.eu' || auth.token.email === 'amministrazione@ferrioli.eu')"
+      },
+      "ballots": {
+        "$motionId": {
+          "$uid": {
+            ".write": "auth != null && auth.uid === $uid && root.child('aula/session/status').val() === 'active'",
+            ".validate": "newData.hasChildren(['choice', 'name', 'at']) && (newData.child('choice').val() === 'yes' || newData.child('choice').val() === 'no' || newData.child('choice').val() === 'abstain' || newData.child('choice').val() === 'blank' || newData.child('choice').val() === 'null')"
+          }
+        }
+      }
+    }
+  }
+}

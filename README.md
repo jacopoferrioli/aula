@@ -1,40 +1,38 @@
-# Assemblea - FERRIOLI.EU
+# Assemblea Parlamentare Stato di Seborg - FERRIOLI.EU
 
-Applicazione web leggera per simulare la gestione di un’assemblea. HTML, CSS e JavaScript, senza build. La realizzazione è puramente a scopo ricreazionale e di ricerca, i nomi rappresentati sono fittizi e non rappresentano nessuna reale Istituzione.
+Applicazione web statica per gestire sedute, interventi, mozioni, votazioni e verbali.
 
-## Prova immediata
+## Accesso
 
-Apri `dist/index.html` nel browser e scegli **Prova la presidenza · demo locale**. Da **Impostazioni → Carica dati dimostrativi** puoi caricare una seduta fittizia. La demo salva i dati nel browser; non sincronizza computer diversi. Il cambio del ruolo demo permette di provare anche il votante (email fittizia `votante@example.test`).
+Accesso esclusivamente tramite Firebase Email/Password. Il presidente è `jacopo@ferrioli.eu`; i segretari sono `amministrazione.generale@cas.ferrioli.eu` e `amministrazione@ferrioli.eu`. Gli altri account sono votanti.
 
-## Funzioni
+La pagina di accesso non offre demo né modifica della configurazione Firebase. La demo è disponibile soltanto dopo il login del presidente, in **Impostazioni → Demo locale del presidente**. Usa dati separati dalla seduta reale e non scrive sul database. **Torna alla seduta reale** ripristina il lavoro precedente.
 
-- Seduta: apertura, sospensione con orario e conto alla rovescia, ripresa, conclusione.
-- Ordine del giorno e discussione; interventi per numero del posto, coda, pausa e aggiunta di tempo, sforamento luminoso.
-- Componenti, presenze e diritto di voto.
-- Mozioni ed emendamenti, voto palese/segreto, raccolta manuale/digitale.
-- Preparazione → apertura → chiusura → scrutinio → pubblicazione. I conteggi non compaiono nell’interfaccia prima dello scrutinio; il tabellone li mostra solo dopo la pubblicazione.
-- Maggioranza semplice, assoluta, qualificata o soglia personalizzata, con quorum. Presenze e basi di calcolo sono fotografate all’apertura.
-- Verbale con interventi, cronologia, sospensioni e risultati pubblicati. **Salva come PDF** apre la stampa del browser: su macOS seleziona **PDF → Salva come PDF**.
+## Partecipanti
 
-## Firebase
+La modalità principale consente al presidente di inserire presenti totali, assenti totali, presenti senza diritto e assenti senza diritto, senza nomi. Totali e aventi diritto sono calcolati automaticamente. L’elenco nominativo rimane disponibile come opzione secondaria; selezionando la relativa fonte, il conteggio deriva dall’elenco. Le sedute preesistenti con membri mantengono la modalità nominativa finché il presidente non la cambia.
 
-La configurazione web del progetto `ferriolieu` fornita dall’utente è inclusa in `dist/firebase-config.js`. Authentication usa Email/Password; non viene attivato Analytics. Questa versione carica gli SDK Firebase 11.10.0 da gstatic quando si effettua l’accesso. Eventuali configurazioni salvate manualmente in precedenza nel browser hanno la precedenza.
+Quorum, maggioranze e controllo del totale dei voti usano la fonte selezionata. Le presenze sono fissate all’apertura di ogni votazione, così una modifica successiva non cambia il risultato storico.
 
-Il progetto deve avere Authentication con Email/Password attivo e Realtime Database creato e accessibile agli account di prova. Gli account devono esistere già. L’app utilizza esclusivamente i percorsi `aula/session` e `aula/ballots` e gestisce una seduta condivisa alla volta. Non modifica automaticamente le regole del database. Un progetto Firebase di test separato evita sovrapposizioni con dati reali.
+In modalità numerica, i votanti autenticati possono esprimersi senza un elenco precompilato. Il voto palese usa nome/email dell’account. Il sistema resta una simulazione con controlli semplici.
 
-Ruoli:
+## Altre funzioni
 
-- `jacopo@ferrioli.eu`: presidente.
-- `amministrazione.generale@cas.ferrioli.eu`, `amministrazione@ferrioli.eu`: segretari.
-- Altri account: votanti. L’email deve figurare tra i componenti presenti aventi diritto.
-- **Tabellone**: **Apri tabellone** apre una scheda separata (`?view=tabellone`) in sola visualizzazione. Mantieni aperta la regia nello stesso browser/profilo: timer, sospensioni e risultati pubblicati si aggiornano tramite eventi storage. Funziona anche senza Realtime Database. Il tabellone non richiede un secondo login; non riceve risultati non pubblicati. Puoi trascinare la scheda su un secondo monitor e selezionare **Schermo intero**.
+- Ordine del giorno, apertura, sospensione e ripresa della seduta.
+- Interventi per numero del posto, coda, timer con pausa, aggiunta di tempo e sforamento.
+- Mozioni ed emendamenti, voto manuale o dai dispositivi, palese o segreto.
+- Scrutinio riservato e pubblicazione dei risultati.
+- Tabellone in una scheda separata nello stesso browser/profilo, sincronizzato con la regia.
+- Verbale stampabile in PDF tramite la stampa del browser.
 
-Verifica del 26 ottobre 2026: il servizio Authentication riconosce il progetto; Realtime Database risponde HTTP 423 (database disattivato). Il login con credenziali utente non è stato eseguito. Dopo un accesso riuscito, se il database non risponde entro 7 secondi o rifiuta la connessione, l’app mantiene l’accesso e lavora in locale. Per collegare dispositivi diversi occorre riattivare Realtime Database e accedere nuovamente. Il controllo dei ruoli e la riservatezza dei conteggi sono volutamente a livello d’interfaccia, per la simulazione richiesta. Non costituisce un sistema per elezioni reali. La sincronizzazione della regia scrive l’intera seduta: per il testing evita modifiche simultanee di presidente e segretario. I voti sono scritti separatamente per utente.
+## Guide
 
-## Verifica
+- [Configurare Firebase e Realtime Database](GUIDA-FIREBASE.md)
+- [Modificare i testi su GitHub](MODIFICARE-TESTI.md)
+- [Pubblicazione e dominio](PUBBLICAZIONE.md)
 
-Controllata la sintassi JavaScript e verificati ruoli, presenze, maggioranze, quorum, risultati nascosti/pubblicati, sforamento del timer e registrazione degli interventi. Verificati anche apertura del tabellone separato, permanenza della regia, sincronizzazione di timer e sospensioni e trasferimento dei soli risultati pubblicati. Collaudo visivo non completato per indisponibilità dell’automazione del browser.
+I file del sito sono in `dist`. Non serve una build: GitHub Actions pubblica questa cartella. La configurazione web Firebase è in `dist/firebase-config.js`; Analytics non viene inizializzato.
 
-## Pubblicazione e dominio
+## Verifiche
 
-Vedi [PUBBLICAZIONE.md](PUBBLICAZIONE.md). Il repository include un workflow GitHub Actions che pubblica `dist` su GitHub Pages. Il dominio personalizzato va configurato nelle impostazioni Pages e nel DNS.
+Esegui `node tests/assembly.test.cjs`. Il test verifica accesso, permessi della demo, separazione tra demo e seduta reale, conteggi numerici/nominativi, validazione, quorum, snapshot delle presenze, voto digitale e dati del tabellone.
