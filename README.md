@@ -1,6 +1,6 @@
-# Assemblea Parlamentare Stato di Seborg - FERRIOLI.EU
+# Assemblea - FERRIOLI.EU
 
-Applicazione web leggera per simulare la gestione di un’assemblea. HTML, CSS e JavaScript, senza build.
+Applicazione web leggera per simulare la gestione di un’assemblea. HTML, CSS e JavaScript, senza build. La realizzazione è puramente a scopo ricreazionale e di ricerca, i nomi rappresentati sono fittizi e non rappresentano nessuna reale Istituzione.
 
 ## Prova immediata
 
