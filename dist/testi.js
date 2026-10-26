@@ -5,7 +5,7 @@ window.AULA_TESTI = {
   titoloLogin: "Assemblea\nParlamentare\n",
   descrizioneLogin: "Presidenza, discussione e deliberazioni.\nIl portale dei lavori parlamentari di FERRIOLI.EU.",
   titoloAccesso: "Accedi al Parlamento",
-  descrizioneAccesso: "Accedi con il tuo account FERRIOLI.EU. Per suporto contatta ced.aula@ferrioli.eu",
+  descrizioneAccesso: "Accedi con il tuo account FERRIOLI.EU. Per supporto contatta ced.aula@ferrioli.eu",
   pulsanteAccesso: "Accedi →",
   presidenza: "Presidenza dell’Assemblea",
   partecipanti: "Partecipanti",
